@@ -160,7 +160,7 @@ const tags = async (req, res) => {
 };
 exports.tags = tags;
 const uploadMap = async (req, res) => {
-    if (req.body.isWorldMap) {
+    if (req.body.worldMap) {
         return (0, exports.uploadWorldMap)(req, res);
     }
     else {

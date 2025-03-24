@@ -63,87 +63,92 @@ const loadTags = async() => { // loads all tags for user to see easily
 
 
 const Addmap: React.FC = () => {
-    const [causeRerender, setCauseRerender] = useState<number>(0)
+  const [causeRerender, setCauseRerender] = useState<number>(0)
+  const [successMessage, setSuccessMessage] = useState<string>("")
 
-    const postMap = async (e: React.SyntheticEvent) => {
-        e.preventDefault()
-        const form = new FormData(document.getElementById("mapForm") as HTMLFormElement)
+  const postMap = async (e: React.SyntheticEvent) => {
+    e.preventDefault()
 
-        const tags: string = form.get("tags") as string;
+    const form = document.getElementById("mapForm") as HTMLFormElement
+    const formData = new FormData(form)
+    const checkboxes = document.querySelectorAll('#tagsCheckboxDiv input[name="tagcheckbox"]'); // Select all checkboxes inside the `tagsCheckboxDiv`
 
-        const jsonString = JSON.stringify({ 
-            name: form.get("name") as string,
-            description: form.get("description") as string,
-            campain: form.get("campain") as string,
-            tags: tags,
-            isWorldMap: form.get("worldMap") as unknown as boolean
+    const checkedCheckboxes = Array.from(checkboxes) as HTMLInputElement[]; // Filter the checked checkboxes
 
-          })
-        const incomingData = await fetch('/api/uploadMap', // DOTO 
-          {method: 'put',
-          body: jsonString,
-          headers: {
-              "Content-Type": "application/json",
-              "authorization": `Bearer ${localStorage.getItem("sessionToken")}`
-          },
-        })
-          if(!incomingData.ok){
-            console.log("oh noes, fetch didn't work")
-            return
-          }
+    if (checkedCheckboxes.filter(checkbox => checkbox.checked).length > 1) { //makes sure that the tags from checkboxes are in list, as if only one is checked it is only a string
+      formData.set("tagcheckboxHasMultiple", "true")
+    }
+    const incomingData = await fetch('/api/uploadMap',  
+      {method: 'post',
+      body: formData,
+      headers: {
+          "authorization": `Bearer ${localStorage.getItem("sessionToken")}`
+      },
+    })
 
-        setCauseRerender(causeRerender => causeRerender + 1)
+    form.reset()
+    
+    if(!incomingData.ok){
+      console.log("oh noes, fetch didn't work")
+      setSuccessMessage("Map upload failed")
+      return
+    } else {
+      setSuccessMessage("Map uploaded successfully")
     }
 
-    useEffect(() => {
-        const abortCtrl: AbortController = new AbortController()
-        
-        loadWorldMaps()
-        loadTags()
-        return () => abortCtrl.abort()
-      }, [causeRerender])
+    setCauseRerender(causeRerender => causeRerender + 1)
+  }
 
-    return (
-        <div>
-            <form id="mapForm" style={{
-              display: 'grid',
-              gridColumn: '1fr',
-              justifyItems: 'center'
-              }} onSubmit={(e: React.SyntheticEvent) => postMap(e)}>
+  useEffect(() => {
+      const abortCtrl: AbortController = new AbortController()
+      
+      loadWorldMaps()
+      loadTags()
+      return () => abortCtrl.abort()
+    }, [causeRerender])
 
-                    <label htmlFor="worldMap">Is it a World Map: </label>
-                    <input type="checkbox" id="worldMap" name="worldMap" value="worldMap" />
+  return (
+    <div>
+      <form id="mapForm" style={{
+        display: 'grid',
+        gridColumn: '1fr',
+        justifyItems: 'center'
+        }} onSubmit={(e: React.SyntheticEvent) => postMap(e)}>
 
-                    <label htmlFor="name">Name: </label>
-                    <input type="text" id="name" name="name"/>
+              <label htmlFor="worldMap">Is it a World Map: </label>
+              <input type="checkbox" id="worldMap" name="worldMap" className='textInput' value="worldMap" />
 
-                    <label htmlFor="description">Description: </label> 
-                    <textarea id="description" name="description"></textarea>
+              <label htmlFor="name">Name: </label>
+              <input type="text" id="name" className='textInput' name="name"/>
+
+              <label htmlFor="description">Description: </label> 
+              <textarea id="description" className='textInput' name="description"></textarea>
 
 
-                    <label htmlFor="campain">Campain: </label>
-                    <input type="text" id="campain" name="campain" />
+              <label htmlFor="campain">Campain: </label>
+              <input type="text" id="campain" className='textInput' name="campain" />
 
-                <br />
+          <br />
 
-                    <span>Upload image: </span>
-                    <input type="file" name="image" id="image" accept="image/*" />
+              <span>Upload image: </span>
+              <input type="file" name="image" id="image" accept="image/*" />
 
-                <br/>
+          <br/>
 
-                    <label htmlFor="tags">Tags (seperate tags with whitespace, example: 'forest city'): </label>
-                    <div id="tagsCheckboxDiv">
-                    
-                    </div>
+              <label htmlFor="tags">Tags (seperate tags with whitespace, example: 'forest city'): </label>
+              <div id="tagsCheckboxDiv">
+              
+              </div>
 
-                    <input type="text" id="tags" name="tags" />
+              <input type="text" className='textInput' id="tags" name="tags" />
 
-                <br/>
-                <button type="submit" id="submit"> submit </button>
+          <br/>
+          <button type="submit" id="submit"> submit </button>
 
-            </form>
-        </div>
-    )
+      </form>
+      <p> {successMessage} </p>
+    </div>
+  )
 }
 
-export default Addmap
+export default Addmap 

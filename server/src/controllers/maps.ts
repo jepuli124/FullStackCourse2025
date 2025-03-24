@@ -167,7 +167,7 @@ export const tags = async (req: any, res: any) => { // returns all tags in a lis
 
 export const uploadMap = async (req: any, res: any) => {
     
-    if (req.body.isWorldMap) {
+    if (req.body.worldMap) {
         return uploadWorldMap(req, res)
     } else {
         return uploadLocationMap(req, res)
