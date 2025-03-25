@@ -25,6 +25,5 @@
   },
   "homepage": "https://github.com/jepuli124/FullStackCourse2025#readme",
   "dependencies": {
-    "typescript": "^5.8.2"
   }
 }
