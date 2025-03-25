@@ -71,6 +71,56 @@ export const locationMapById = async (req: any, res: any) =>{  // return specifi
     }
 }
 
+const addImagePathToMaps = async (maps: IWorldMap[] | ILocationMap[] ) =>{
+    const returnMaps: {
+        name: string
+        description: string
+        imageId: string | undefined
+        campain: string
+        tags: string[]}[] = []
+
+    for (let index = 0; index < maps.length; index++) {
+        const image: IImage | null = await Image.findById(maps[index].imageId);
+        const tags: string[] = []
+        maps[index].tags.forEach((tag) => {
+            tags.push(tag.name)
+        })
+        returnMaps.push({name: maps[index].name, description: maps[index].description, imageId: image?.path, campain: maps[index].campain, tags: tags})
+    }
+    return returnMaps
+}
+
+export const worldMaps = async (req: any, res: any) =>{ // returns all world maps without images 
+    try {
+        const worldMaps: IWorldMap[] | null = await WorldMap.find()
+        
+        if (!worldMaps) {
+            return res.status(404).json({message: "No world maps found"})
+        }
+
+        return res.status(200).json(await addImagePathToMaps(worldMaps))
+    } catch (error: any) {
+        console.log(`Error while fetching world maps: ${error}`)
+        return res.status(500).json({message: "Internal server error"})
+    }
+    
+}
+
+export const locationMaps = async (req: any, res: any) =>{ // returns all location maps without images 
+    try {
+        const locationMaps: ILocationMap[] | null = await LocationMap.find()
+        
+        if (!locationMaps) {
+            return res.status(404).json({message: "No location maps found"})
+        }
+
+        return res.status(200).json(await addImagePathToMaps(locationMaps))
+    } catch (error: any) {
+        console.log(`Error while fetching location maps: ${error}`)
+        return res.status(500).json({message: "Internal server error"})
+    }
+    }
+
 export const worldMapsWithoutImages = async (req: any, res: any) =>{ // returns all world maps without images 
     try {
         const worldMaps: IWorldMap[] | null = await WorldMap.find()

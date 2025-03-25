@@ -19,7 +19,7 @@ mongoose_1.default.Promise = Promise;
 const db = mongoose_1.default.connection;
 db.on("error", console.error.bind(console, "apua lol"));
 app.use(express_1.default.json()); //parses the incoming post body
-//app.use(express.static(path.join(__dirname, "../public")))
+app.use(express_1.default.static(path_1.default.join(__dirname, "../public")));
 app.use("/", index_1.default);
 if (process.env.NODE_ENV === 'development') { //dev mode
     const corsOptions = {

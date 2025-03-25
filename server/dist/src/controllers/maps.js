@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.uploadLocationMap = exports.uploadWorldMap = exports.uploadMap = exports.tags = exports.locationMapByTag = exports.worldMapByTag = exports.locationMapsWithoutImages = exports.worldMapsWithoutImages = exports.locationMapById = exports.worldMapById = exports.locationMapByName = exports.worldMapByName = void 0;
+exports.uploadLocationMap = exports.uploadWorldMap = exports.uploadMap = exports.tags = exports.locationMapByTag = exports.worldMapByTag = exports.locationMapsWithoutImages = exports.worldMapsWithoutImages = exports.locationMaps = exports.worldMaps = exports.locationMapById = exports.worldMapById = exports.locationMapByName = exports.worldMapByName = void 0;
 const Maps_1 = require("../models/Maps");
 const Image_1 = require("../models/Image");
 const Tags_1 = require("../models/Tags");
@@ -70,6 +70,46 @@ const locationMapById = async (req, res) => {
     }
 };
 exports.locationMapById = locationMapById;
+const addImagePathToMaps = async (maps) => {
+    const returnMaps = [];
+    for (let index = 0; index < maps.length; index++) {
+        const image = await Image_1.Image.findById(maps[index].imageId);
+        const tags = [];
+        maps[index].tags.forEach((tag) => {
+            tags.push(tag.name);
+        });
+        returnMaps.push({ name: maps[index].name, description: maps[index].description, imageId: image?.path, campain: maps[index].campain, tags: tags });
+    }
+    return returnMaps;
+};
+const worldMaps = async (req, res) => {
+    try {
+        const worldMaps = await Maps_1.WorldMap.find();
+        if (!worldMaps) {
+            return res.status(404).json({ message: "No world maps found" });
+        }
+        return res.status(200).json(await addImagePathToMaps(worldMaps));
+    }
+    catch (error) {
+        console.log(`Error while fetching world maps: ${error}`);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+};
+exports.worldMaps = worldMaps;
+const locationMaps = async (req, res) => {
+    try {
+        const locationMaps = await Maps_1.LocationMap.find();
+        if (!locationMaps) {
+            return res.status(404).json({ message: "No location maps found" });
+        }
+        return res.status(200).json(await addImagePathToMaps(locationMaps));
+    }
+    catch (error) {
+        console.log(`Error while fetching location maps: ${error}`);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+};
+exports.locationMaps = locationMaps;
 const worldMapsWithoutImages = async (req, res) => {
     try {
         const worldMaps = await Maps_1.WorldMap.find();

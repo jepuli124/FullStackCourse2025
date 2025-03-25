@@ -21,7 +21,7 @@ const db: Connection = mongoose.connection
 db.on("error", console.error.bind(console, "apua lol"))
 
 app.use(express.json()); //parses the incoming post body
-//app.use(express.static(path.join(__dirname, "../public")))
+app.use(express.static(path.join(__dirname, "../public")))
 app.use("/", router)
 
 if(process.env.NODE_ENV === 'development'){ //dev mode

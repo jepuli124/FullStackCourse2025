@@ -9,6 +9,10 @@ export default defineConfig({
       '/api' : {
         target: 'http://localhost:1234',
         changeOrigin: true,
+      }, 
+      '/image' : {
+        target: 'http://localhost:1234',
+        changeOrigin: true,
       }
     },
     port: 3000
