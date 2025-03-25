@@ -40,6 +40,33 @@ export const locationMapByName = async (req: any, res: any) =>{  // return speci
     }
 }
 
+export const mapById = async (req: any, res: any) =>{  // return specific world map by id
+    try {
+        const worldMap: IWorldMap | null = await WorldMap.findById(req.params["id"])
+        if(worldMap) {
+            if(worldMap?.imageId !== undefined){
+                const mapImage = await Image.findById(worldMap?.imageId)
+                return res.status(200).json({worldMap: worldMap, mapImage: mapImage?.path})
+            }
+     
+            return res.status(200).json({worldMap: worldMap})
+        } else {
+            const locationMap: ILocationMap | null = await LocationMap.findOne({id: req.params["id"]})
+            if(locationMap?.imageId !== undefined){
+                const mapImage = await Image.findOne({id: locationMap?.imageId})
+
+                return res.status(200).json({locationMap: locationMap, mapImage: mapImage})
+            }
+
+            return res.status(200).json({locationMap: locationMap, mapImage: undefined})
+        }
+        
+    } catch (error: any) {
+        console.log(`Error while fetching a world map by id: ${error}`)
+        return res.status(500).json({message: "Internal server error"})
+    }
+}
+
 export const worldMapById = async (req: any, res: any) =>{  // return specific world map by id
     try {
         const worldMap: IWorldMap | null = await WorldMap.findById(req.params["id"])
@@ -73,6 +100,7 @@ export const locationMapById = async (req: any, res: any) =>{  // return specifi
 
 const addImagePathToMaps = async (maps: IWorldMap[] | ILocationMap[] ) =>{
     const returnMaps: {
+        id: string
         name: string
         description: string
         imageId: string | undefined
@@ -85,7 +113,7 @@ const addImagePathToMaps = async (maps: IWorldMap[] | ILocationMap[] ) =>{
         maps[index].tags.forEach((tag) => {
             tags.push(tag.name)
         })
-        returnMaps.push({name: maps[index].name, description: maps[index].description, imageId: image?.path, campain: maps[index].campain, tags: tags})
+        returnMaps.push({id: maps[index].id, name: maps[index].name, description: maps[index].description, imageId: image?.path, campain: maps[index].campain, tags: tags})
     }
     return returnMaps
 }
@@ -93,7 +121,7 @@ const addImagePathToMaps = async (maps: IWorldMap[] | ILocationMap[] ) =>{
 export const worldMaps = async (req: any, res: any) =>{ // returns all world maps without images 
     try {
         const worldMaps: IWorldMap[] | null = await WorldMap.find()
-        
+        console.log(worldMaps)
         if (!worldMaps) {
             return res.status(404).json({message: "No world maps found"})
         }

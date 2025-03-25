@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import CircularGallery from '../othersComponents/CircularGallery.tsx'
+
 import IWorldMap from '../interfaces/IWorldMap.tsx'
 import ILocationMap from '../interfaces/ILocationMap.tsx'
 
@@ -28,8 +28,6 @@ const MainMenu: React.FC = () => {
     const reconstructedWorldMaps: itemInterface[] = []
     const reconstructedLocationMaps: itemInterface[] = []
 
-    console.log(tempWorldMaps)
-
     tempWorldMaps.forEach((element) => {
       reconstructedWorldMaps.push({image: element.imageId, text: 
         element.name })
@@ -54,10 +52,10 @@ const MainMenu: React.FC = () => {
     <>
       <div>MainMenu</div>
       <div style={{ height: '600px', position: 'relative' }}>
-        <CircularGallery items={worldMaps} bend={0} textColor="#ffffff" borderRadius={0.05} />
+        {worldMaps && worldMaps.length > 0 ? < ></> : <p>No world maps available</p> }
       </div>
       <div style={{ height: '600px', position: 'relative' }}>
-        <CircularGallery items={locationMaps} bend={0} textColor="#ffffff" borderRadius={0.05} />
+      {locationMaps && locationMaps.length > 0 ? <></>: <p>No location maps available</p> }
       </div>
     </>
   )

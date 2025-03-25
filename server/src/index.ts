@@ -2,7 +2,7 @@ import {Request, Response, Router} from "express"
 import path from "path";
 import upload from '../middleware/multer-config'
 import { validateToken, validateTokenAdmin } from '../middleware/validate-config'
-import { worldMapByName, locationMapByName, worldMapById, locationMapById, worldMapsWithoutImages, locationMapsWithoutImages, worldMapByTag, locationMapByTag, tags, uploadWorldMap, uploadLocationMap, uploadMap, worldMaps, locationMaps } from "./controllers/maps"
+import { worldMapByName, locationMapByName, worldMapById, locationMapById, worldMapsWithoutImages, locationMapsWithoutImages, worldMapByTag, locationMapByTag, tags, uploadWorldMap, uploadLocationMap, uploadMap, worldMaps, locationMaps, mapById } from "./controllers/maps"
 import { login, register, validateAdmin } from "./controllers/login";
 
 
@@ -15,6 +15,8 @@ function setup(){
 router.get('/api/worldMaps/name/:name', worldMapByName);
 
 router.get('/api/locationMaps/name/:name', locationMapByName);
+
+router.get('/api/map/id/:id', mapById);
 
 router.get('/api/worldMaps/id/:id', worldMapById);
 

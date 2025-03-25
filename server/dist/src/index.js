@@ -15,6 +15,7 @@ function setup() {
 ;
 router.get('/api/worldMaps/name/:name', maps_1.worldMapByName);
 router.get('/api/locationMaps/name/:name', maps_1.locationMapByName);
+router.get('/api/map/id/:id', maps_1.mapById);
 router.get('/api/worldMaps/id/:id', maps_1.worldMapById);
 router.get('/api/locationMaps/id/:id', maps_1.locationMapById);
 router.get('/api/worldMaps', maps_1.worldMaps);

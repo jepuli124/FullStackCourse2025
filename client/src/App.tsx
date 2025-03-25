@@ -4,6 +4,7 @@ import MyLogin from './components/MyLogin'
 import Addmap from './components/Addmap'
 import Header from './components/Header'
 import MainMenu from './components/MainMenu'
+import ShowMap from './components/ShowMap'
 
 function App() {
 
@@ -28,8 +29,8 @@ function App() {
           <Route path="/browseMaps/" element= {
              <p> 5 / 5 </p> 
           }/>
-          <Route path="/map/" element= {
-             <p> 5 / 5 </p> 
+          <Route path="/map/:id" element= {
+             <ShowMap />
           }/>
         </Routes>
       </BrowserRouter>
