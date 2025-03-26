@@ -3,6 +3,7 @@ interface ILocationMap extends Document{
     description: string
     imageId: string
     worldMapIDThisBelongsTo: string
+    id?: string
     campain: string
     tags: string[]
 }

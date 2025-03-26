@@ -3,7 +3,7 @@ import mongoose, {Document, Schema} from "mongoose";
 interface IImage extends Document{
     filename: string
     path: string
-    id?: String
+    id?: string
 }
 
 let images: Schema = new Schema ({

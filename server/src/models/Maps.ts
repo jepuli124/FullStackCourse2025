@@ -4,8 +4,8 @@ import {ITag, tags} from "./Tags" ;
 interface IWorldMap extends Document{
     name: string
     description: string
-    imageId: String
-    id?: String
+    imageId: string
+    id?: string
     campain: string
     tags: ITag[]
 }
@@ -13,10 +13,11 @@ interface IWorldMap extends Document{
 interface ILocationMap extends Document{
     name: string
     description: string
-    imageId: String
+    imageId: string
     worldMapIDThisBelongsTo: string
     campain: string
     tags: ITag[]
+    id?: string
 }
 
 let worldMaps: Schema = new Schema ({

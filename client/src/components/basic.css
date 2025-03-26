@@ -1,0 +1,11 @@
+.grid-one-center {
+    display: grid;
+    grid-column: 1fr;
+    justify-items: center;
+    justify-content: center;
+}
+
+.flex-single-row {
+    display: flex;
+    gap: 10px;
+}

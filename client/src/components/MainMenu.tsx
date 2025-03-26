@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react'
 
 import IWorldMap from '../interfaces/IWorldMap.tsx'
 import ILocationMap from '../interfaces/ILocationMap.tsx'
+import MapGallery from './MapGallery.tsx'
 
 interface itemInterface {
+  id?: string,
   image: string,
   text: string
 }
@@ -29,11 +31,11 @@ const MainMenu: React.FC = () => {
     const reconstructedLocationMaps: itemInterface[] = []
 
     tempWorldMaps.forEach((element) => {
-      reconstructedWorldMaps.push({image: element.imageId, text: 
+      reconstructedWorldMaps.push({id: element.id, image: element.imageId, text: 
         element.name })
     })
     tempLocationMaps.forEach((element) => {
-      reconstructedLocationMaps.push({image: element.imageId, text: 
+      reconstructedLocationMaps.push({id: element.id, image: element.imageId, text: 
         element.name })
     })
 
@@ -52,10 +54,10 @@ const MainMenu: React.FC = () => {
     <>
       <div>MainMenu</div>
       <div style={{ height: '600px', position: 'relative' }}>
-        {worldMaps && worldMaps.length > 0 ? < ></> : <p>No world maps available</p> }
+        {worldMaps && worldMaps.length > 0 ? <MapGallery items={worldMaps}/> : <p>No world maps available</p> }
       </div>
       <div style={{ height: '600px', position: 'relative' }}>
-      {locationMaps && locationMaps.length > 0 ? <></>: <p>No location maps available</p> }
+      {locationMaps && locationMaps.length > 0 ? <MapGallery items={locationMaps}/>: <p>No location maps available</p> }
       </div>
     </>
   )

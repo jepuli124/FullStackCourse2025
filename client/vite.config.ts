@@ -10,9 +10,9 @@ export default defineConfig({
         target: 'http://localhost:1234',
         changeOrigin: true,
       }, 
-      '/image' : {
+      '/images' : {
         target: 'http://localhost:1234',
-        changeOrigin: true,
+        changeOrigin: false,
       }
     },
     port: 3000

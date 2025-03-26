@@ -51,7 +51,10 @@ export const mapById = async (req: any, res: any) =>{  // return specific world 
      
             return res.status(200).json({worldMap: worldMap})
         } else {
-            const locationMap: ILocationMap | null = await LocationMap.findOne({id: req.params["id"]})
+            const locationMap: ILocationMap | null = await LocationMap.findById(req.params["id"])
+            if(!locationMap){
+                return res.status(404).json({message: "Map not found"})
+            }
             if(locationMap?.imageId !== undefined){
                 const mapImage = await Image.findOne({id: locationMap?.imageId})
 
@@ -100,7 +103,7 @@ export const locationMapById = async (req: any, res: any) =>{  // return specifi
 
 const addImagePathToMaps = async (maps: IWorldMap[] | ILocationMap[] ) =>{
     const returnMaps: {
-        id: string
+        id: string | undefined
         name: string
         description: string
         imageId: string | undefined
@@ -121,7 +124,6 @@ const addImagePathToMaps = async (maps: IWorldMap[] | ILocationMap[] ) =>{
 export const worldMaps = async (req: any, res: any) =>{ // returns all world maps without images 
     try {
         const worldMaps: IWorldMap[] | null = await WorldMap.find()
-        console.log(worldMaps)
         if (!worldMaps) {
             return res.status(404).json({message: "No world maps found"})
         }
@@ -274,7 +276,6 @@ export const uploadWorldMap = async (req: any, res: any) => { // upload a world 
             newMap.campain = req.body.campain
         }
         if(req.body.tagcheckbox !== undefined){
-            console.log(req.body.tagcheckbox[0][0])
             if(req.body.tagcheckbox[0][0] !== undefined){
                 for (let index = 0; index < req.body.tagcheckbox.length; index++) {
                     const newTag: ITag = new Tag({
@@ -283,7 +284,6 @@ export const uploadWorldMap = async (req: any, res: any) => { // upload a world 
                     newMap.tags.push(newTag);
                 }
             } else {
-                console.log("got Here")
                 const newTag: ITag = new Tag({
                     name: req.body.tagcheckbox
                 })

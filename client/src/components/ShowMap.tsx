@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import IWorldMap from '../interfaces/IWorldMap'
 import ILocationMap from '../interfaces/ILocationMap'
-import IImage from '../interfaces/IImage'
-
 
 const ShowMap: React.FC = () => {
 
@@ -22,14 +20,14 @@ const ShowMap: React.FC = () => {
                 console.log("fetch failed")
             return
             }
-            const parcedData: {worldMap: IWorldMap, locationMap: ILocationMap, mapImage: IImage | undefined }  = await incomingData.json()
+            const parcedData: {worldMap: IWorldMap, locationMap: ILocationMap, mapImage: string }  = await incomingData.json()
             if(parcedData.worldMap){
                 setMapData(parcedData.worldMap)
             } else if (parcedData.locationMap) {
                 setMapData(parcedData.locationMap)
             }
             if(parcedData.mapImage){
-                setImagePath(parcedData.mapImage.path)
+                setImagePath(parcedData.mapImage)
             }
         }
         fetchMapById()

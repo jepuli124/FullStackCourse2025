@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -39,8 +38,8 @@ const Header: React.FC = () => { // from some week tasks, seemed nice
     
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
+
+        <AppBar position="sticky">
             <Toolbar> {/* not sure what this all does, but it was used in weekly task and end result is good looking and somewhat responsible*/}
             <IconButton
                 size="large"
@@ -68,7 +67,6 @@ const Header: React.FC = () => { // from some week tasks, seemed nice
              : <></>}
             </Toolbar>
         </AppBar>
-        </Box>
 
     )
 }

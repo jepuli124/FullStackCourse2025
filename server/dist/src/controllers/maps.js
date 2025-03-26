@@ -51,7 +51,10 @@ const mapById = async (req, res) => {
             return res.status(200).json({ worldMap: worldMap });
         }
         else {
-            const locationMap = await Maps_1.LocationMap.findOne({ id: req.params["id"] });
+            const locationMap = await Maps_1.LocationMap.findById(req.params["id"]);
+            if (!locationMap) {
+                return res.status(404).json({ message: "Map not found" });
+            }
             if (locationMap?.imageId !== undefined) {
                 const mapImage = await Image_1.Image.findOne({ id: locationMap?.imageId });
                 return res.status(200).json({ locationMap: locationMap, mapImage: mapImage });
@@ -110,7 +113,6 @@ const addImagePathToMaps = async (maps) => {
 const worldMaps = async (req, res) => {
     try {
         const worldMaps = await Maps_1.WorldMap.find();
-        console.log(worldMaps);
         if (!worldMaps) {
             return res.status(404).json({ message: "No world maps found" });
         }
@@ -255,7 +257,6 @@ const uploadWorldMap = async (req, res) => {
             newMap.campain = req.body.campain;
         }
         if (req.body.tagcheckbox !== undefined) {
-            console.log(req.body.tagcheckbox[0][0]);
             if (req.body.tagcheckbox[0][0] !== undefined) {
                 for (let index = 0; index < req.body.tagcheckbox.length; index++) {
                     const newTag = new Tags_1.Tag({
@@ -265,7 +266,6 @@ const uploadWorldMap = async (req, res) => {
                 }
             }
             else {
-                console.log("got Here");
                 const newTag = new Tags_1.Tag({
                     name: req.body.tagcheckbox
                 });
