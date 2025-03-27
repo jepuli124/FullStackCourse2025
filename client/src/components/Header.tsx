@@ -39,7 +39,7 @@ const Header: React.FC = () => { // from some week tasks, seemed nice
 
     return (
 
-        <AppBar position="sticky" className='fill-width'>
+        <AppBar className='fill-width top-middle-screen'>
             <Toolbar> {/* not sure what this all does, but it was used in weekly task and end result is good looking and somewhat responsible*/}
             <IconButton
                 size="large"

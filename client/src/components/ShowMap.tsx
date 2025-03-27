@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import IWorldMap from '../interfaces/IWorldMap'
 import ILocationMap from '../interfaces/ILocationMap'
+import DockAdapter from './dockAdapter'
 
 const ShowMap: React.FC = () => {
 
@@ -35,15 +36,18 @@ const ShowMap: React.FC = () => {
     }, [params])
 
     return (
-        <>
-            <div>
+        <div>
+            <div style={{position:"static"}}>
                 <h1> {mapData ? mapData.name : "fetching map data " } </h1>
                 <h2> {mapData ? mapData.description : "" } </h2>
                 <p> {mapData ? mapData.campain : "" } </p>
                 <p> {mapData ? "" : "" } </p>
-                {imagePath ? <img src={imagePath} /> : <p>Image not found</p>}
             </div>
-        </>
+            <div>
+                {imagePath ? <img src={imagePath} style={{left:"0px", top:"620px", margin: "20px",  position:"absolute"}}/> : <p>Image not found</p>}
+            </div>
+            <DockAdapter />
+        </div>
         
     )
 }
