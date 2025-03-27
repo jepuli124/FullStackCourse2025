@@ -1,60 +1,43 @@
-import { Button } from '@mui/material'
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import './basic.css';
 import MapGallerySlot from './MapGallerySlot';
 import mapItem from '../interfaces/IMapItem';
-
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+const responsive = {
+  superLargeDesktop: {
+    // the naming can be any, depends on you.
+    breakpoint: { max: 4000, min: 3000 },
+    items: 5
+  },
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 3
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 464 },
+    items: 2
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 1
+  }
+};
 
 interface incomingParams {
     items: mapItem[]
-    numberOfItems?: number
 }
 
-const MapGallery: React.FC<incomingParams> = ({items, numberOfItems = 6}) => {
+const MapGallery: React.FC<incomingParams> = ({items}) => {
 
-  const [listIndex, setListIndex] = useState<number>(0)
-  const [showableItems, setShowableItems] = useState<mapItem[]>([])
-  
-
-  useEffect(() => {
-    const showItems = () =>{
-      if(items.length == 0 || listIndex < 0){
-        return
-      }
-      const tempMapItems: mapItem[] = []
-      console.log(listIndex, items.length)
-      for (let index = listIndex; numberOfItems >= tempMapItems.length-1; index++) { // goes through the list from the index until 6 maps are selected.
-        while(index >= items.length){
-          index -= items.length
-        }
-        const element = items[index];
-        tempMapItems.push(element)
-      }
-
-  
-      setShowableItems(tempMapItems)
-    } 
-    if(listIndex < 0){
-      setListIndex(items.length - 1)
-    }
-    showItems()
-      return () => setShowableItems([])
-    }, [listIndex, items])
-    
   return (
     <>
-      <div>MapGallery</div>
-      <Button onClick={() => setListIndex(listIndex => listIndex + 1)}>+1 index</Button>
-      <Button onClick={() => setListIndex(listIndex => listIndex - 1)}>-1 index</Button>
-      <div className='flex-single-row'>
-        {showableItems.length > 0 ? showableItems.map((item, index) => (
-          <MapGallerySlot key={index} item={item}  />
-        )) : 
-        <></>}
-      </div>
-    
+      <Carousel
+        infinite={true} responsive={responsive} draggable={true} swipeable={true}
+      >{items.map((item, index) => (
+        <MapGallerySlot key={index} item={item}  />
+      ))}</Carousel>
     </>
-    
   )
 }
 

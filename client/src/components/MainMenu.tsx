@@ -4,6 +4,9 @@ import IWorldMap from '../interfaces/IWorldMap.tsx'
 import ILocationMap from '../interfaces/ILocationMap.tsx'
 import MapGallery from './MapGallery.tsx'
 
+
+
+
 interface itemInterface {
   id?: string,
   image: string,
@@ -51,15 +54,15 @@ const MainMenu: React.FC = () => {
       }, [])
 
   return (
-    <>
+    <div className='fill-width'>
       <div>MainMenu</div>
-      <div style={{ height: '600px', position: 'relative' }}>
+      <div style={{ height: 'auto', position: 'relative', margin: '1rem' }}>
         {worldMaps && worldMaps.length > 0 ? <MapGallery items={worldMaps}/> : <p>No world maps available</p> }
       </div>
-      <div style={{ height: '600px', position: 'relative' }}>
+      <div style={{ height: 'auto', position: 'relative', margin: '1rem' }}>
       {locationMaps && locationMaps.length > 0 ? <MapGallery items={locationMaps}/>: <p>No location maps available</p> }
       </div>
-    </>
+    </div>
   )
 }
 

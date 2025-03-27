@@ -9,12 +9,15 @@ export default defineConfig({
       '/api' : {
         target: 'http://localhost:1234',
         changeOrigin: true,
-      }, 
-      '/images' : {
+      },
+      '^.*/images' : {
         target: 'http://localhost:1234',
-        changeOrigin: false,
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/map/, ''),
       }
     },
     port: 3000
   }
 })
+//http://localhost:3000/images/turtle_e22e41f5-7826-4068-b8b3-6c548f00d241.png
+//http://localhost:3000/images/turtle_e22e41f5-7826-4068-b8b3-6c548f00d241.png
