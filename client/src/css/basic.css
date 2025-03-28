@@ -34,3 +34,7 @@
     bottom: 0;
     left: 50vw;
 }
+
+.hide-overflow {
+    overflow: hidden;
+}

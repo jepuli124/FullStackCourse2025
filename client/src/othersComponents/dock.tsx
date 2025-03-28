@@ -1,5 +1,7 @@
 "use client";
 
+// Found here: https://www.reactbits.dev/components/dock
+
 import {
   motion,
   MotionValue,

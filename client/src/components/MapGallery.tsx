@@ -1,5 +1,5 @@
 import React from 'react'
-import './basic.css';
+import '../css/basic.css'
 import MapGallerySlot from './MapGallerySlot';
 import mapItem from '../interfaces/IMapItem';
 import Carousel from "react-multi-carousel";
