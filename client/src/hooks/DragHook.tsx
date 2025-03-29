@@ -8,8 +8,25 @@ const useDragObject = (defaultCordinates: {left: number, top: number}) => { // t
     const [imageSize, setImageSize] = useState<{x: number, y: number}> ({x: 0, y: 0})
     const dimensions = useWindowDimensions()
 
-    const howMuchOfImagebeforeStoppedX = 0.7
-    const howMuchOfImageBeforeStoppedY = 0.8
+    
+
+    const preventGoingOffScreen = (tempLeft: number, tempTop: number) => {
+        const howMuchOfImagebeforeStoppedLeft = 0.7
+        const howMuchOfImageBeforeStoppedTop = 0.8
+        const howMuchOfImagebeforeStoppedRight = 0.1
+        const howMuchOfImageBeforeStoppedDown = 0.1
+        if(tempLeft > dimensions.width * howMuchOfImagebeforeStoppedRight){
+            tempLeft = dimensions.width * howMuchOfImagebeforeStoppedRight
+        } else if (tempLeft < defaultCordinates.left - (imageSize.x * howMuchOfImagebeforeStoppedLeft)) {
+            tempLeft = defaultCordinates.left - (imageSize.x * howMuchOfImagebeforeStoppedLeft)
+        }
+        if(tempTop > dimensions.height * howMuchOfImageBeforeStoppedDown){
+            tempTop = dimensions.height * howMuchOfImageBeforeStoppedDown
+        } else if (tempTop < defaultCordinates.top - (imageSize.y * howMuchOfImageBeforeStoppedTop)) {
+            tempTop = defaultCordinates.top - (imageSize.y * howMuchOfImageBeforeStoppedTop)
+        }
+        return { tempLeft, tempTop }
+    }
 
     const dragObject = (e: React.DragEvent) => {
         if(mouseCordinates.left == 0 && mouseCordinates.top == 0){
@@ -21,27 +38,14 @@ const useDragObject = (defaultCordinates: {left: number, top: number}) => { // t
             return
         }
         
-        let tempLeft = cordinates.left - (mouseCordinates.left - e.clientX)
-        let tempTop = cordinates.top - (mouseCordinates.top - e.clientY)
-
-        if(tempLeft > dimensions.width * howMuchOfImagebeforeStoppedX){
-            tempLeft = dimensions.width * howMuchOfImagebeforeStoppedX
-        } else if (tempLeft < defaultCordinates.left - (imageSize.x * howMuchOfImagebeforeStoppedX)) {
-            tempLeft = defaultCordinates.left - (imageSize.x * howMuchOfImagebeforeStoppedX)
-        }
-        if(tempTop > dimensions.height * howMuchOfImageBeforeStoppedY){
-            tempTop = dimensions.height * howMuchOfImageBeforeStoppedY
-        } else if (tempTop < defaultCordinates.top - (imageSize.y * howMuchOfImageBeforeStoppedY)) {
-            tempTop = defaultCordinates.top - (imageSize.y * howMuchOfImageBeforeStoppedY)
-        }
-
+        const {tempLeft, tempTop} = preventGoingOffScreen(cordinates.left - (mouseCordinates.left - e.clientX), cordinates.top - (mouseCordinates.top - e.clientY))
 
         setCordinates({left: tempLeft, top: tempTop })
         setMouseCordinates({left: e.clientX, top: e.clientY })
     }
     
 
-    return { cordinates, mouseCordinates, imageSize, dragObject, setCordinates, setImageSize };
+    return { cordinates, mouseCordinates, imageSize, dragObject, setCordinates, setImageSize, preventGoingOffScreen };
 }
 
 export default useDragObject
