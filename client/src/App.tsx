@@ -4,7 +4,7 @@ import MyLogin from './components/MyLogin'
 import Addmap from './components/Addmap'
 import Header from './components/Header'
 import MainMenu from './components/MainMenu'
-import ShowMap from './components/ShowMap'
+import MapWrapperZPP from './components/MapWrapperZPP'
 
 function App() {
 
@@ -30,7 +30,7 @@ function App() {
              <p> 5 / 5 </p> 
           }/>
           <Route path="/map/:id" element= {
-             <ShowMap />
+             <MapWrapperZPP />
           }/>
         </Routes>
       </BrowserRouter>

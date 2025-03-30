@@ -7,13 +7,13 @@ import useDragObject from '../hooks/DragHook'
 import '../css/basic.css'
 import useWindowDimensions from '../hooks/WindowsDimensionHook'
 
-
+//old file, currently not in use
 
 const ShowMap: React.FC = () => {
 
     const maxZoom = 5 // declares maxium zoom possible either way
 
-    const [mapData, setMapData] = useState<IWorldMap | ILocationMap | undefined>(undefined)
+    //const [mapData, setMapData] = useState<IWorldMap | ILocationMap | undefined>(undefined)
     const [imagePath, setImagePath] = useState<string | undefined> (undefined)
     
     const [naturalImageSize, setNaturalImageSize] = useState<{x: number, y: number}> ({x: 0, y: 0})
@@ -33,11 +33,11 @@ const ShowMap: React.FC = () => {
             return
             }
             const parcedData: {worldMap: IWorldMap, locationMap: ILocationMap, mapImage: string }  = await incomingData.json()
-            if(parcedData.worldMap){
-                setMapData(parcedData.worldMap)
-            } else if (parcedData.locationMap) {
-                setMapData(parcedData.locationMap)
-            }
+            // if(parcedData.worldMap){
+            //     setMapData(parcedData.worldMap)
+            // } else if (parcedData.locationMap) {
+            //     setMapData(parcedData.locationMap)
+            // }
             if(parcedData.mapImage){
                 setImagePath(parcedData.mapImage)
             }
@@ -57,7 +57,7 @@ const ShowMap: React.FC = () => {
         const event = e as unknown as WheelEvent // types are hard
         const direction = (event.deltaY/Math.abs(event.deltaY))
         const tempZoom = zoom + direction
-        const zoomMultiplier = 0.12
+        //const zoomMultiplier = 0.12
 
         if(tempZoom > maxZoom){
             setZoom(maxZoom)
