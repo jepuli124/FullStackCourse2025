@@ -5,7 +5,7 @@ import {ITag, Tag} from '../models/Tags'
 
 
 async function saveTagIfNew(tag: ITag){
-    if(await Tag.findOne({name: tag.name}) == null){ // if tag doesn't exist yet, save it as new, findOne function returns null if nothing was found. find function would return a empty list. this is more optimal.
+    if(tag.name.trim() !== "" && await Tag.findOne({name: tag.name}) == null){ // if tag doesn't exist yet, save it as new, findOne function returns null if nothing was found. find function would return a empty list. this is more optimal.
         await tag.save()
     }
 };

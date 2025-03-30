@@ -5,7 +5,7 @@ const Maps_1 = require("../models/Maps");
 const Image_1 = require("../models/Image");
 const Tags_1 = require("../models/Tags");
 async function saveTagIfNew(tag) {
-    if (await Tags_1.Tag.findOne({ name: tag.name }) == null) { // if tag doesn't exist yet, save it as new, findOne function returns null if nothing was found. find function would return a empty list. this is more optimal.
+    if (tag.name.trim() !== "" && await Tags_1.Tag.findOne({ name: tag.name }) == null) { // if tag doesn't exist yet, save it as new, findOne function returns null if nothing was found. find function would return a empty list. this is more optimal.
         await tag.save();
     }
 }

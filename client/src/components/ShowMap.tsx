@@ -92,11 +92,17 @@ const ShowMap: React.FC = () => {
         setCordinates({left: 0, top: 0})
     }
 
+    const preventDragHandler = (e: React.DragEvent) => { // this prevent drag preview, taken here: https://stackoverflow.com/questions/45707391/how-to-hide-ghost-image-in-reactjs-drag-event
+        e.dataTransfer.setDragImage(new Image(), 0, 0);
+      }
+
     return (
         <div>
             <div style={{width: width * 0.995, height: height * 0.892, overflow: "hidden", left: 0, top: "10vh" , position:"absolute", border: "3px black solid"}}>
-                <div style={{left: cordinates.left, top: cordinates.top,  position:"absolute"}}>
-                {imagePath ? <img onDrag={(e: React.DragEvent) => dragObject(e)} src={imagePath} onLoad={(e: React.SyntheticEvent) => imgLoad(e)} onWheel={(e: React.SyntheticEvent) => {scrollSize(e); moveAfterScroll(e)}} style={{width: imageSize.x, height: imageSize.y}}/> : <p>Image not found</p>}
+                <div draggable={true} onDragStart={(e: React.DragEvent) => preventDragHandler(e)} onDrag={(e: React.DragEvent) => {dragObject(e)}} onWheel={(e: React.SyntheticEvent) => {scrollSize(e); moveAfterScroll(e)}} style={{left: cordinates.left, top: cordinates.top,  position:"absolute"}}>
+                    <div>
+                    {imagePath ? <img draggable={false} src={imagePath} onLoad={(e: React.SyntheticEvent) => imgLoad(e)} style={{width: imageSize.x, height: imageSize.y}}/> : <p>Image not found</p>}
+                    </div>
                 </div>
             </div>
             {/* <div style={{position:"absolute", left: "50vm", top: "15vh"}}>

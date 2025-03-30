@@ -13,10 +13,10 @@ const MapGallerySlot: React.FC<incomingParams> = ({item}) => {
   return (
     <Card className='grid-one-center fill-height' >
 
-      <div>
+      <div draggable={false}>
         <div className='grid-one-center' onClick={() => navigate("/map/" + item.id)} style={{position: "relative", width: "20vm", height:"30vh", overflow: "hidden"}}>
           <div >
-            <img src={item.image}></img>
+            <img src={item.image} draggable={false}></img>
           </div>
         </div>
         <h1>{item.text}</h1>
