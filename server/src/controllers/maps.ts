@@ -1,6 +1,7 @@
 import {IWorldMap, WorldMap, ILocationMap, LocationMap} from '../models/Maps'
 import {IImage, Image} from '../models/Image'
 import {ITag, Tag} from '../models/Tags'
+import { Marker } from '../models/Marker'
 
 
 
@@ -46,7 +47,8 @@ export const mapById = async (req: any, res: any) =>{  // return specific world 
         if(worldMap) {
             if(worldMap?.imageId !== undefined){
                 const mapImage = await Image.findById(worldMap?.imageId)
-                return res.status(200).json({worldMap: worldMap, mapImage: mapImage?.path})
+                const markers = await Marker.find({mapThisBelongsTo: worldMap.id})
+                return res.status(200).json({worldMap: worldMap, mapImage: mapImage?.path, markers: markers})
             }
      
             return res.status(200).json({worldMap: worldMap})
@@ -57,8 +59,8 @@ export const mapById = async (req: any, res: any) =>{  // return specific world 
             }
             if(locationMap?.imageId !== undefined){
                 const mapImage = await Image.findOne({id: locationMap?.imageId})
-
-                return res.status(200).json({locationMap: locationMap, mapImage: mapImage})
+                const markers = await Marker.find({mapThisBelongsTo: locationMap.id})
+                return res.status(200).json({locationMap: locationMap, mapImage: mapImage, markers: markers})
             }
 
             return res.status(200).json({locationMap: locationMap, mapImage: undefined})

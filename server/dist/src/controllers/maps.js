@@ -4,6 +4,7 @@ exports.uploadLocationMap = exports.uploadWorldMap = exports.uploadMap = exports
 const Maps_1 = require("../models/Maps");
 const Image_1 = require("../models/Image");
 const Tags_1 = require("../models/Tags");
+const Marker_1 = require("../models/Marker");
 async function saveTagIfNew(tag) {
     if (tag.name.trim() !== "" && await Tags_1.Tag.findOne({ name: tag.name }) == null) { // if tag doesn't exist yet, save it as new, findOne function returns null if nothing was found. find function would return a empty list. this is more optimal.
         await tag.save();
@@ -46,7 +47,8 @@ const mapById = async (req, res) => {
         if (worldMap) {
             if (worldMap?.imageId !== undefined) {
                 const mapImage = await Image_1.Image.findById(worldMap?.imageId);
-                return res.status(200).json({ worldMap: worldMap, mapImage: mapImage?.path });
+                const markers = await Marker_1.Marker.find({ mapThisBelongsTo: worldMap.id });
+                return res.status(200).json({ worldMap: worldMap, mapImage: mapImage?.path, markers: markers });
             }
             return res.status(200).json({ worldMap: worldMap });
         }
@@ -57,7 +59,8 @@ const mapById = async (req, res) => {
             }
             if (locationMap?.imageId !== undefined) {
                 const mapImage = await Image_1.Image.findOne({ id: locationMap?.imageId });
-                return res.status(200).json({ locationMap: locationMap, mapImage: mapImage });
+                const markers = await Marker_1.Marker.find({ mapThisBelongsTo: locationMap.id });
+                return res.status(200).json({ locationMap: locationMap, mapImage: mapImage, markers: markers });
             }
             return res.status(200).json({ locationMap: locationMap, mapImage: undefined });
         }

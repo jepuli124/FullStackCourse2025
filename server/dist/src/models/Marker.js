@@ -36,10 +36,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Marker = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 let markers = new mongoose_1.Schema({
-    name: { type: String, require: true },
+    name: { type: String, require: false },
     x: { type: Number, require: true },
     y: { type: Number, require: true },
-    mapThisBelongsTo: { type: String, require: true }
+    color: { type: String, require: false },
+    symbol: { type: String, require: false },
+    mapThisBelongsTo: { type: String, require: false },
+    linkToAnotherMap: { type: String, require: false },
 });
 const Marker = mongoose_1.default.model("markers", markers);
 exports.Marker = Marker;

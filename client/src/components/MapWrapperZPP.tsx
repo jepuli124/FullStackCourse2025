@@ -3,16 +3,15 @@ import { useParams } from 'react-router';
 
 import IWorldMap from '../interfaces/IWorldMap';
 import ILocationMap from '../interfaces/ILocationMap';
-
-//import useWindowDimensions from '../hooks/WindowsDimensionHook';
 import MapZPP from './MapZPP';
+import IMarker from '../interfaces/IMarker';
 
 
-const MapWrapperZPP: React.FC = () => {
+const MapWrapperZPP: React.FC = () => { // only fetches the map and passes data to MapZPP
 
     const [imagePath, setImagePath] = useState<string | undefined> (undefined)
     const [mapData, setMapData] = useState<IWorldMap | ILocationMap | undefined>(undefined)
-    // const {width, height} = useWindowDimensions()
+    const [markers, setMarkers] = useState<IMarker[] | undefined>(undefined)
     
     const params = useParams()
 
@@ -25,7 +24,7 @@ const MapWrapperZPP: React.FC = () => {
                 console.log("fetch failed")
             return
             }
-            const parcedData: {worldMap: IWorldMap, locationMap: ILocationMap, mapImage: string }  = await incomingData.json()
+            const parcedData: {worldMap?: IWorldMap, locationMap?: ILocationMap, mapImage?: string, markers?: IMarker[] }  = await incomingData.json()
             if(parcedData.worldMap){
                 setMapData(parcedData.worldMap)
             } else if (parcedData.locationMap) {
@@ -34,21 +33,17 @@ const MapWrapperZPP: React.FC = () => {
             if(parcedData.mapImage){
                 setImagePath(parcedData.mapImage)
             }
+            if(parcedData.markers){
+                setMarkers(parcedData.markers)
+            }
         }
         fetchMapById()
         return () => abortCtrl.abort()
     }, [params])
 
   return (
-    <div>
-        
-        <div>
-            {/* <div style={{width: width * 0.995, height: height * 0.892, overflow: "hidden", left: 0, top: "10vh" , position:"absolute", border: "3px black solid"}}>
-                
-            </div> */}
-            {imagePath ? <MapZPP imagePath={imagePath} mapData={mapData}/> : <></> }
-            
-        </div>
+    <div style={{border: "3px black solid"}}>
+        {imagePath ? <MapZPP imagePath={imagePath} mapData={mapData} markers={markers}/> : <></> }
     </div>
   )
 }
