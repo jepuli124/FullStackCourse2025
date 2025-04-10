@@ -10,6 +10,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const validateAdmin = async (req, res) => {
     try {
         res.status(200).json({ message: "proceed" });
+        return;
     }
     catch (error) {
         console.log(`Error while get a card: ${error}`);
@@ -54,6 +55,7 @@ const register = async (req, res) => {
         };
         const token = jsonwebtoken_1.default.sign(payload, process.env.SECRET, { expiresIn: "100m" }); // creation of the token
         res.status(200).json({ messsage: "registery successful", token: token });
+        return;
     }
     catch (error) {
         console.log(`Error in registery: ${error}`);
@@ -80,6 +82,7 @@ const login = async (req, res) => {
             ;
         }
         res.status(403).json({ message: `login failed ` });
+        return;
     }
     catch (error) {
         console.log(`Error while login: ${error}`);

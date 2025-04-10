@@ -1,7 +1,7 @@
 import {IWorldMap, WorldMap, ILocationMap, LocationMap} from '../models/Maps'
 import {IImage, Image} from '../models/Image'
 import {ITag, Tag} from '../models/Tags'
-import { Marker } from '../models/Marker'
+import { IMarker, Marker } from '../models/Marker'
 
 
 
@@ -235,19 +235,7 @@ export const locationMapByTag = async (req: any, res: any) =>{ // returns all wo
     
     }
 
-export const tags = async (req: any, res: any) => { // returns all tags in a list
-    try {
-        
-        const tags = await Tag.find()
-        return res.status(200).json(tags) 
-
-    } catch (error: any) {
-        console.log(`Error while fetching tags: ${error}`)
-        return res.status(500).json({message: "Internal server error"})
-    }
-    }
-
-export const uploadMap = async (req: any, res: any) => {
+export const uploadMap = async (req: any, res: any) => { //upload any map
     
     if (req.body.worldMap) {
         return uploadWorldMap(req, res)
@@ -389,7 +377,7 @@ export const uploadLocationMap = async (req: any, res: any) => { //upload a loca
         
         console.log("New location map", newMap)
         await newMap.save()
-        res.status(201).json({msg: `successful operation in upload location map`}) // calling it a day :)
+        return res.status(201).json({msg: `successful operation in upload location map`}) // calling it a day :)
 
     } catch (error: any) {
         console.log(`Error while uploading location map: ${error}`)

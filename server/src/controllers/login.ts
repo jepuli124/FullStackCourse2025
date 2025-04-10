@@ -8,6 +8,7 @@ export const validateAdmin = async (req: Request, res: Response): Promise<void> 
 
     try {
         res.status(200).json({message: "proceed"})
+        return
     } catch (error: any) {
         console.log(`Error while get a card: ${error}`)
         res.status(500).json({message: "Internal server error"})
@@ -56,6 +57,7 @@ export const register = async (req: Request, res: Response): Promise<void> => { 
         const token: string = jwt.sign(payload, process.env.SECRET as string, { expiresIn: "100m"}) // creation of the token
 
         res.status(200).json({messsage: "registery successful", token: token})
+        return
     } catch (error: any) {
         console.log(`Error in registery: ${error}`)
         res.status(500).json({message: "Internal server error"})
@@ -83,6 +85,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {  //
         }
 
         res.status(403).json({message: `login failed `})
+        return
     } catch (error: any) {
         console.log(`Error while login: ${error}`)
         res.status(500).json({message: "Internal server error"})

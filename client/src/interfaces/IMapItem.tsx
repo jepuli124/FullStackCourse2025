@@ -1,5 +1,5 @@
 interface mapItem {
-    id?: string
+    _id?: string
     image: string
     text: string
   }

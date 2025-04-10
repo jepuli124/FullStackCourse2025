@@ -6,6 +6,7 @@ interface IMarker {
     symbol?: string
     mapThisBelongsTo?: string
     linkToAnotherMap?: string
+    _id: string
 }
 
 export default IMarker

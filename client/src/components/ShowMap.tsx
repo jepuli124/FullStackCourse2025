@@ -111,7 +111,7 @@ const ShowMap: React.FC = () => {
                 <p> {mapData ? mapData.campain : "" } </p>
                 <p> {mapData ? "" : "" } </p>
             </div> */}
-            <DockAdapter button1={centerMap}/>
+            {/* <DockAdapter button1={centerMap}/> */}
         </div>
         
     )

@@ -1,7 +1,7 @@
 import React from 'react'
 import Dock from '../othersComponents/dock'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleInfo, faFaceSmile, faHome, faPerson } from '@fortawesome/free-solid-svg-icons';
+import { faCrosshairs, faGear, faHome, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useControls } from 'react-zoom-pan-pinch';
 
 interface incomingParams {
@@ -11,12 +11,13 @@ interface incomingParams {
 }
 
 const DockAdapter: React.FC<incomingParams> = ({button1, button2, button3 }) => {
-    const { resetTransform } = useControls()
+    const { resetTransform, centerView } = useControls()
     const items = [
-        { icon: <FontAwesomeIcon icon={faHome} />, label: 'Home', onClick: () => resetTransform() },
-        { icon: <FontAwesomeIcon icon={faFaceSmile} />, label: 'Archive', onClick: () => { if(button1){ button1() } } },
-        { icon: <FontAwesomeIcon icon={faPerson} />, label: 'Profile', onClick: () => { if(button2){ button2() } } },
-        { icon: <FontAwesomeIcon icon={faCircleInfo} />, label: 'Settings', onClick: () => { if(button3){ button3() } } },
+        { icon: <FontAwesomeIcon icon={faHome} />, label: 'reset', onClick: () => resetTransform() },
+        { icon: <FontAwesomeIcon icon={faCrosshairs} />, label: 'center', onClick: () => centerView() },
+        { icon: <FontAwesomeIcon icon={faPlus} />, label: 'add marker', onClick: () => { if(button1){ button1() } } },
+        { icon: <FontAwesomeIcon icon={faGear} />, label: 'edit marker', onClick: () => { if(button2){ button2() } } },
+        { icon: <FontAwesomeIcon icon={faMinus} />, label: 'delete marker', onClick: () => { if(button3){ button3() } } },
       ];
     return (
         <div className='bottom-middle-screen'>

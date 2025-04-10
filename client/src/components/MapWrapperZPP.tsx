@@ -11,7 +11,6 @@ const MapWrapperZPP: React.FC = () => { // only fetches the map and passes data 
 
     const [imagePath, setImagePath] = useState<string | undefined> (undefined)
     const [mapData, setMapData] = useState<IWorldMap | ILocationMap | undefined>(undefined)
-    const [markers, setMarkers] = useState<IMarker[] | undefined>(undefined)
     
     const params = useParams()
 
@@ -33,17 +32,14 @@ const MapWrapperZPP: React.FC = () => { // only fetches the map and passes data 
             if(parcedData.mapImage){
                 setImagePath(parcedData.mapImage)
             }
-            if(parcedData.markers){
-                setMarkers(parcedData.markers)
-            }
         }
         fetchMapById()
         return () => abortCtrl.abort()
     }, [params])
 
   return (
-    <div style={{border: "3px black solid"}}>
-        {imagePath ? <MapZPP imagePath={imagePath} mapData={mapData} markers={markers}/> : <></> }
+    <div style={{border: "3px black solid", width: "100%"}}>
+        {imagePath ? <MapZPP imagePath={imagePath} mapData={mapData}/> : <></> }
     </div>
   )
 }

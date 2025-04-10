@@ -50,7 +50,7 @@ const Header: React.FC = () => { // from some week tasks, seemed nice
             >
             </IconButton>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                Epic time task management thingie
+                Detailed Dungeons
             </Typography>
             <Button color="inherit" component={RouterLink} to="/">Home</Button>
             <Button color="inherit" component={RouterLink} to="/addMap">Add map</Button>

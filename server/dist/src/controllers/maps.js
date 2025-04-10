@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.uploadLocationMap = exports.uploadWorldMap = exports.uploadMap = exports.tags = exports.locationMapByTag = exports.worldMapByTag = exports.locationMapsWithoutImages = exports.worldMapsWithoutImages = exports.locationMaps = exports.worldMaps = exports.locationMapById = exports.worldMapById = exports.mapById = exports.locationMapByName = exports.worldMapByName = void 0;
+exports.uploadLocationMap = exports.uploadWorldMap = exports.uploadMap = exports.locationMapByTag = exports.worldMapByTag = exports.locationMapsWithoutImages = exports.worldMapsWithoutImages = exports.locationMaps = exports.worldMaps = exports.locationMapById = exports.worldMapById = exports.mapById = exports.locationMapByName = exports.worldMapByName = void 0;
 const Maps_1 = require("../models/Maps");
 const Image_1 = require("../models/Image");
 const Tags_1 = require("../models/Tags");
@@ -219,17 +219,6 @@ const locationMapByTag = async (req, res) => {
     }
 };
 exports.locationMapByTag = locationMapByTag;
-const tags = async (req, res) => {
-    try {
-        const tags = await Tags_1.Tag.find();
-        return res.status(200).json(tags);
-    }
-    catch (error) {
-        console.log(`Error while fetching tags: ${error}`);
-        return res.status(500).json({ message: "Internal server error" });
-    }
-};
-exports.tags = tags;
 const uploadMap = async (req, res) => {
     if (req.body.worldMap) {
         return (0, exports.uploadWorldMap)(req, res);
@@ -368,7 +357,7 @@ const uploadLocationMap = async (req, res) => {
         }
         console.log("New location map", newMap);
         await newMap.save();
-        res.status(201).json({ msg: `successful operation in upload location map` }); // calling it a day :)
+        return res.status(201).json({ msg: `successful operation in upload location map` }); // calling it a day :)
     }
     catch (error) {
         console.log(`Error while uploading location map: ${error}`);
