@@ -1,0 +1,15 @@
+{
+  "name": "nodejscrashcourse",
+  "version": "1.0.0",
+  "description": "none",
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --env-file=.env server.js"
+  },
+  "dependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
