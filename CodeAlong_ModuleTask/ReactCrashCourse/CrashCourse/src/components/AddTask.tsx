@@ -11,7 +11,7 @@ const AddTask: React.FC<incomingParams> = ({onSubmit}) => {
 
   return (
     <div>
-        <form className='add-form' onSubmit={(e) => {
+        <form className='add-form' onSubmit={(e: React.SyntheticEvent) => {
             e.preventDefault()
             const task: Itask = {name: name, text: text}
             if(onSubmit) {

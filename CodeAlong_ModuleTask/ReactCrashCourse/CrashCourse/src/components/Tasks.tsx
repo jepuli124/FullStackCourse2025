@@ -1,21 +1,20 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Itask from '../interfaces/Itask'
 import { Task } from './Task'
 
 interface incomingParams {
     incomingTasks: Itask[]
+    deleteTask?: (index: number) => void  
 }
 
-const Tasks: React.FC<incomingParams> = ({ incomingTasks }) => {
-    const [tasks, setTasks] = useState<Itask[]>(incomingTasks)
-    const deleteTask = (delIndex: number) => {
-        setTasks(tasks.filter((task, index) => index !== delIndex))
-    }
+const Tasks: React.FC<incomingParams> = ({ incomingTasks, deleteTask }) => {
+
+    
   return (
     <div className='container'>
-        {tasks.map((task, index) => (
+        {incomingTasks.map((task, index) => (
             <div key={index}>
-                <Task task={task} deleteTask={() => { deleteTask(index) }} ></Task>
+                <Task task={task} deleteTask={() => { if(deleteTask) deleteTask(index) }} ></Task>
             </div>
         ))}
     </div>
