@@ -5,6 +5,13 @@
     justify-content: center;
 }
 
+.grid-two-center { /* doesn't work? */
+    display: grid;
+    grid-column: 1fr, 1fr;
+    justify-items: center;
+    justify-content: center;
+}
+
 .flex-single-row {
     display: flex;
     gap: 10px;

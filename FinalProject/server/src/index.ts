@@ -4,7 +4,7 @@ import upload from '../middleware/multer-config'
 import { validateToken, validateTokenAdmin } from '../middleware/validate-config'
 import { worldMapByName, locationMapByName, worldMapById, locationMapById, worldMapsWithoutImages, locationMapsWithoutImages, worldMapByTag, locationMapByTag, uploadWorldMap, uploadLocationMap, uploadMap, worldMaps, locationMaps, mapById } from "./controllers/maps"
 import { login, register, validateAdmin } from "./controllers/login";
-import { markersByMapId, uploadMarker } from "./controllers/markers";
+import { deleteMarker, editMarker, markersByMapId, uploadMarker } from "./controllers/markers";
 import { tags } from "./controllers/tags";
 
 
@@ -46,13 +46,20 @@ router.post('/api/uploadLocationMap', upload.single("image"), uploadWorldMap);
 
 router.post('/api/uploadWorldMap', upload.single("image"), uploadLocationMap);
 
-router.post('/api/marker', uploadMarker);
-
 router.get('/api/validateTokenAdmin', validateTokenAdmin, validateAdmin);
 
 router.post('/api/register', register);
 
 router.post('/api/login', login);
+
+
+router.post('/api/marker', uploadMarker);
+
+router.put('/api/updateMarker/:id', editMarker)
+
+router.delete('/api/deleteMarker/:id', deleteMarker)
+
+
 
 setup()
 

@@ -1,0 +1,58 @@
+:root {
+    --s1primaryGreen: #40ffaa;
+    --s1primaryGreendAlt: #0DFF93;
+    --s1primaryGreendark: #004229;
+    --s1secondaryLightBlue: #40f4ff;
+    --s1secondaryLightBlueAlt: #0cd1dd;
+    --s1secondaryLightBlueDark: #005582;
+    --s1thirdGreen: #40ff4b;
+    --s1thirdGreenAlt: #0DFF1B;
+    --s1thirdGreenDark: #004203;
+
+    --s2primaryBlue:  #4079ff;
+    --s2primaryBlueAlt:  #0D55FF;
+    --s2primaryBlueDark:  #0041D9;
+    --s2secondaryPurple:  #6640ff;
+    --s2secondaryPurpleAlt:  #3D0DFF;
+    --s2secondaryPurpleDark:  #2B00D9;
+    --s2thirdLightblue:  #40D9ff;
+    --s2thirdLightblueAlt:  #0DCFFF;
+    --s2thirdLightblueDark:  #00AED9;
+
+    --textColor: #000069;
+    --textColorLight: #bcbcff;
+
+    --light: #dcdcff; /* not sure where these are used*/
+    --dark: #040479;
+
+    --page-background: #011229;
+}
+
+
+.primary-color{
+    color: var(--s1primaryGreen);
+    background-color: var(--s1primaryGreendark);
+}
+
+.secondary-color{
+    color: var(--s1secondaryLightBlue);
+    background-color: var(--s1secondaryLightBlueDark);
+}
+
+.third-color{
+    color: var(--s1thirdGreen);
+    background-color: var(--s1thirdGreenDark);
+}
+
+.primary-border-color{
+    
+    border-color: var(--s1primaryGreendAlt);
+}
+
+.secondary-border-color{
+    border-color: var(--s1secondaryLightBlueAlt);
+}
+
+.third-border-color{
+    border-color: var(--s1thirdGreenAlt);
+}
