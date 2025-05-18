@@ -7,17 +7,18 @@ import MapZPP from './MapZPP';
 import IMarker from '../interfaces/IMarker';
 
 
-const MapWrapperZPP: React.FC = () => { // only fetches the map and passes data to MapZPP
 
+const MapWrapperZPP: React.FC = () => { // only fetches the map and passes data to MapZPP
+    const params = useParams()
     const [imagePath, setImagePath] = useState<string | undefined> (undefined)
     const [mapData, setMapData] = useState<IWorldMap | ILocationMap | undefined>(undefined)
     
-    const params = useParams()
+    
 
     useEffect(() => {
         const abortCtrl: AbortController = new AbortController()
         const fetchMapById = async () => {
-        
+            if(!params.id) return 
             const incomingData = await fetch('/api/map/id/' + params.id)
             if(!incomingData.ok){
                 console.log("fetch failed")
@@ -35,7 +36,7 @@ const MapWrapperZPP: React.FC = () => { // only fetches the map and passes data 
         }
         fetchMapById()
         return () => abortCtrl.abort()
-    }, [params])
+    }, [params.id])
 
   return (
     <div style={{border: "3px black solid", width: "100%"}}>

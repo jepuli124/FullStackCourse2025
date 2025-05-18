@@ -43,8 +43,10 @@ export const locationMapByName = async (req: any, res: any) =>{  // return speci
 
 export const mapById = async (req: any, res: any) =>{  // return specific world map by id
     try {
+
         const worldMap: IWorldMap | null = await WorldMap.findById(req.params["id"])
         if(worldMap) {
+
             if(worldMap?.imageId !== undefined){
                 const mapImage = await Image.findById(worldMap?.imageId)
                 const markers = await Marker.find({mapThisBelongsTo: worldMap.id})
@@ -58,11 +60,12 @@ export const mapById = async (req: any, res: any) =>{  // return specific world 
                 return res.status(404).json({message: "Map not found"})
             }
             if(locationMap?.imageId !== undefined){
-                const mapImage = await Image.findOne({id: locationMap?.imageId})
+                const mapImage = await Image.findById(locationMap?.imageId)
                 const markers = await Marker.find({mapThisBelongsTo: locationMap.id})
-                return res.status(200).json({locationMap: locationMap, mapImage: mapImage, markers: markers})
-            }
 
+                return res.status(200).json({locationMap: locationMap, mapImage: mapImage?.path, markers: markers})
+            }
+            
             return res.status(200).json({locationMap: locationMap, mapImage: undefined})
         }
         
@@ -91,7 +94,7 @@ export const locationMapById = async (req: any, res: any) =>{  // return specifi
     try {
         const locationMap: ILocationMap | null = await LocationMap.findOne({id: req.params["id"]})
         if(locationMap?.imageId !== undefined){
-            const mapImage = await Image.findOne({id: locationMap?.imageId})
+            const mapImage = await Image.findById(locationMap?.imageId)
 
             return res.status(200).json({locationMap: locationMap, mapImage: mapImage})
         }
@@ -105,7 +108,7 @@ export const locationMapById = async (req: any, res: any) =>{  // return specifi
 
 const addImagePathToMaps = async (maps: IWorldMap[] | ILocationMap[] ) =>{
     const returnMaps: {
-        id: string | undefined
+        _id: string | undefined
         name: string
         description: string
         imageId: string | undefined
@@ -118,7 +121,7 @@ const addImagePathToMaps = async (maps: IWorldMap[] | ILocationMap[] ) =>{
         maps[index].tags.forEach((tag) => {
             tags.push(tag.name)
         })
-        returnMaps.push({id: maps[index].id, name: maps[index].name, description: maps[index].description, imageId: image?.path, campain: maps[index].campain, tags: tags})
+        returnMaps.push({_id: maps[index].id, name: maps[index].name, description: maps[index].description, imageId: image?.path, campain: maps[index].campain, tags: tags})
     }
     return returnMaps
 }

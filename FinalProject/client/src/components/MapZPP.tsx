@@ -15,6 +15,7 @@ interface incomingParams {
 
 
 const MapZPP: React.FC<incomingParams> = ({imagePath, mapData}) => {
+    console.log("imagePath", imagePath)
     const [currentFunction, setCurrentFunction] = useState<string>("base")
     const [causeMarkerRerender, setCauseMarkerRerender] = useState<number>(0)
     const [markers, setMarkers] = useState<IMarker[]>([])
@@ -26,7 +27,7 @@ const MapZPP: React.FC<incomingParams> = ({imagePath, mapData}) => {
             return
         }
         const { x, y } = mapElement.getBoundingClientRect()
-        console.log("base/test", (e.clientX - x)/scale.current , (e.clientY - y)/scale.current, scale)
+        //(console.log("base/test", (e.clientX - x)/scale.current , (e.clientY - y)/scale.current, scale) works
     }
 
     const [clickFunction, setClickFunction] = useState<(e: React.MouseEvent) => (e: React.MouseEvent) => void>((e: React.MouseEvent) => baseClickFunction)
@@ -108,7 +109,7 @@ const MapZPP: React.FC<incomingParams> = ({imagePath, mapData}) => {
             }
             const parsedData = await incomingData.json()
             setMarkers(parsedData)
-            console.log(parsedData)
+            // console.log("parsedData, markers", parsedData)
         }
 
         loadMarkers()

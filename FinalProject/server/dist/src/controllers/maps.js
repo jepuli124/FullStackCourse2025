@@ -58,9 +58,9 @@ const mapById = async (req, res) => {
                 return res.status(404).json({ message: "Map not found" });
             }
             if (locationMap?.imageId !== undefined) {
-                const mapImage = await Image_1.Image.findOne({ id: locationMap?.imageId });
+                const mapImage = await Image_1.Image.findById(locationMap?.imageId);
                 const markers = await Marker_1.Marker.find({ mapThisBelongsTo: locationMap.id });
-                return res.status(200).json({ locationMap: locationMap, mapImage: mapImage, markers: markers });
+                return res.status(200).json({ locationMap: locationMap, mapImage: mapImage?.path, markers: markers });
             }
             return res.status(200).json({ locationMap: locationMap, mapImage: undefined });
         }
@@ -90,7 +90,7 @@ const locationMapById = async (req, res) => {
     try {
         const locationMap = await Maps_1.LocationMap.findOne({ id: req.params["id"] });
         if (locationMap?.imageId !== undefined) {
-            const mapImage = await Image_1.Image.findOne({ id: locationMap?.imageId });
+            const mapImage = await Image_1.Image.findById(locationMap?.imageId);
             return res.status(200).json({ locationMap: locationMap, mapImage: mapImage });
         }
         return res.status(200).json({ locationMap: locationMap, mapImage: undefined });
@@ -109,7 +109,7 @@ const addImagePathToMaps = async (maps) => {
         maps[index].tags.forEach((tag) => {
             tags.push(tag.name);
         });
-        returnMaps.push({ id: maps[index].id, name: maps[index].name, description: maps[index].description, imageId: image?.path, campain: maps[index].campain, tags: tags });
+        returnMaps.push({ _id: maps[index].id, name: maps[index].name, description: maps[index].description, imageId: image?.path, campain: maps[index].campain, tags: tags });
     }
     return returnMaps;
 };

@@ -9,7 +9,6 @@ interface incomingParams {
 
 
 const MapMarkers: React.FC<incomingParams> = ({markers}) => {
-  console.log(markers)
   return (
     <div>
       {markers ? markers?.length > 0 ? markers.map((marker) => (

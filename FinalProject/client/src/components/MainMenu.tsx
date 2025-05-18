@@ -33,12 +33,13 @@ const MainMenu: React.FC = () => {
     const reconstructedWorldMaps: itemInterface[] = []
     const reconstructedLocationMaps: itemInterface[] = []
 
+
     tempWorldMaps.forEach((element) => {
-      reconstructedWorldMaps.push({id: element.id, image: element.imageId, text: 
+      reconstructedWorldMaps.push({id: element._id, image: element.imageId, text: 
         element.name })
     })
     tempLocationMaps.forEach((element) => {
-      reconstructedLocationMaps.push({id: element.id, image: element.imageId, text: 
+      reconstructedLocationMaps.push({id: element._id, image: element.imageId, text: 
         element.name })
     })
 
