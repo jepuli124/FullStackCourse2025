@@ -1,1 +1,7 @@
 # FullStackCourse2025
+
+The code in video is a work of progress.
+
+Video:
+https://lut-my.sharepoint.com/:v:/g/personal/konsta_jalkanen_student_lut_fi/ESZTmkPGvV1IgTPrhsZlNHIBG9vIy1qCNFAozRkTDP_tXw?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=SZMRbe 
+

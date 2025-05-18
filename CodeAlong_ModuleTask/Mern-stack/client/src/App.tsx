@@ -1,33 +1,37 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+// import { useState } from 'react'
+// import reactLogo from './assets/react.svg'
+// import viteLogo from '/vite.svg'
 import './App.css'
+import Header from './components/Headerinatior'
+import Button from './components/Button'
+import Tasks from './components/Tasks'
+import Itask from './interfaces/Itask'
+import { useState } from 'react'
+import AddTask from './components/AddTask'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const ogtask: Itask = {name: "this", text: "woah"}
+  const [addTask, setAddtask] = useState<boolean>(false)
+  const [tasks, setTasks] =  useState<Itask[]>([ogtask])
+  
+  const deleteTask = (delIndex: number) => {
+        setTasks(tasks.filter((task, index) => index !== delIndex))
+    }
 
   return (
     <>
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+        <Header></Header>
+        <h1>Hello world</h1>
+        {addTask ? <AddTask onSubmit={(task: Itask) => {
+          const tempTasks: Itask[] = [...tasks, task]
+          setTasks(tempTasks)
+          setAddtask(false)
+          }}></AddTask> : <></> }
+        <Button text='add task'  onClickParam={() => setAddtask(true)}></Button>
+        <Tasks incomingTasks={tasks} deleteTask={(index) => deleteTask(index)}></Tasks>
+      </div> 
+      
     </>
   )
 }
